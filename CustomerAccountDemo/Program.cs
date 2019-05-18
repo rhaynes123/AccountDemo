@@ -6,7 +6,7 @@ namespace CustomerAccountDemo
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!\n");
+            Console.WriteLine("Hello Richard!\n");
         }
     }
 }
