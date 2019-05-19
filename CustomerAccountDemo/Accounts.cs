@@ -31,36 +31,59 @@ namespace CustomerAccountDemo
 
         public void DepositToAccount(decimal amount, DateTime date, string note)
         {
-            if(amount <=0)
+            try
             {
-                throw new ArgumentOutOfRangeException(nameof(amount),"Amount of deposit must be positive");
+                if (amount <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(amount), "Amount of deposit must be positive");
+                }
+
+                var deposit = new Transaction(amount, date, note);
+                allTransactions.Add(deposit);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Oops something went wrong during the deposit" + ex);
             }
 
-            var deposit = new Transaction(amount, date, note);
-            allTransactions.Add(deposit);
         }
 
         public void WithdrawFromAccount(decimal amount, DateTime date, string note)
         {
-            if (amount <= 0)
+            try
             {
-                throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawl must be positive");
+                if (amount <= 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(amount), "Amount of withdrawl must be positive");
+                }
+
+                var withdrawal = new Transaction(-amount, date, note);
+                allTransactions.Add(withdrawal);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops something went wrong during the withdrawl"+ex);
             }
 
-            var withdrawal = new Transaction(-amount, date, note);
-            allTransactions.Add(withdrawal);
         }
 
         public string ShowAccountHistory()
         {
             var TransactionReport = new StringBuilder();
-            TransactionReport.AppendLine("Date\tAmount\tNote");
 
-            foreach (var newtransaction in allTransactions)
+            try
             {
-                TransactionReport.AppendLine($"{newtransaction.TransDate.ToShortDateString()}\t${newtransaction.TransAmount}\t{newtransaction.TransNotes}");
-            }
+                TransactionReport.AppendLine("Date\tAmount\tNote");
 
+                foreach (var newtransaction in allTransactions)
+                {
+                    TransactionReport.AppendLine($"{newtransaction.TransDate.ToShortDateString()}\t${newtransaction.TransAmount}\t{newtransaction.TransNotes}");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Oops something went wrong when viewing the report" + ex);
+            }
             return TransactionReport.ToString();
         }
 
