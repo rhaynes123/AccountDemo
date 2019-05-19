@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace CustomerAccountDemo
@@ -50,11 +51,24 @@ namespace CustomerAccountDemo
             allTransactions.Add(withdrawal);
         }
 
-        public Accounts(string name, decimal currentbalance)
+        public string ShowAccountHistory()
+        {
+            var TransactionReport = new StringBuilder();
+            TransactionReport.AppendLine("Date\tAmount\tNote");
+
+            foreach (var newtransaction in allTransactions)
+            {
+                TransactionReport.AppendLine($"{newtransaction.TransDate.ToShortDateString()}\t${newtransaction.TransAmount}\t{newtransaction.TransNotes}");
+            }
+
+            return TransactionReport.ToString();
+        }
+
+        public Accounts(string name, decimal originalbalance)
         {
             Number = num.Next(100000, 999999);//Remember this doesn't prevent duplicates
             AccountHolder = name;
-            DepositToAccount(currentbalance, DateTime.Now, "Current Balance");
+            DepositToAccount(originalbalance, DateTime.Now, "Original Balance");
            
         }
     }
