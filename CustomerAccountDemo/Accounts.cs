@@ -1,11 +1,14 @@
 ﻿using System;
+
 namespace CustomerAccountDemo
 {
     public class Accounts
     {
-        public string Number { get; }
+        readonly Random num = new Random();
+
+        public int Number { get; }
         public string AccountHolder { get; set; }
-        public string AccountBalance { get;  }
+        public decimal AccountBalance { get;  }
 
         public void DepositToAccount(decimal amount, DateTime date, string note)
         {
@@ -13,6 +16,13 @@ namespace CustomerAccountDemo
 
         public void WithdrawFromAccount(decimal amount, DateTime date, string note)
         {
+        }
+
+        public Accounts(string name, decimal currentbalance)
+        {
+            Number = num.Next(100000, 999999);//Remeber this doesn't prevent duplicates
+            AccountHolder = name;
+            AccountBalance = currentbalance;
         }
     }
 }
